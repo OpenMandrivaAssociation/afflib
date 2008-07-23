@@ -5,7 +5,7 @@
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
 Version:	2.3.0
-Release:	%mkrel 1
+Release:	%mkrel 3
 Group:		System/Libraries
 License:	BSD
 URL:		http://www.afflib.org/
