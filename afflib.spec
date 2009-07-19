@@ -10,8 +10,7 @@ Group:		System/Libraries
 License:	BSD
 URL:		http://www.afflib.org/
 Source0:	http://www.afflib.org/downloads/%{name}-%{version}.tar.gz
-#Patch0:		afflib-shared.diff
-#Patch1:		afflib-no_win32.diff
+Patch0:		afflib-3.3.4-gcc44.patch
 BuildRequires:	autoconf
 BuildRequires:	libtool
 BuildRequires:	curl-devel
@@ -65,9 +64,7 @@ This package contains the static afflib library and its header files.
 %prep
 
 %setup -q
-#%patch0 -p1
-#%patch1 -p0
-
+%patch0 -p1 -b .gcc4.4
 
 %build
 #export WANT_AUTOCONF_2_5=1
@@ -87,10 +84,14 @@ export CFLAGS="%{optflags} -fPIC"
     	--enable-fuse=no \
     	--with-curl=%{_prefix}
 
+# Remove rpath from libtool
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
 %make
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 %makeinstall_std
 
