@@ -4,7 +4,7 @@
 
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
-Version:	3.3.4
+Version:	3.3.6
 Release:	%mkrel 1
 Group:		System/Libraries
 License:	BSD
@@ -127,6 +127,7 @@ install -m0644 lib/*.h %{buildroot}%{_includedir}/afflib/
 %{_bindir}/afverify
 %{_bindir}/afxml
 %{_bindir}/s3
+%{_mandir}/man1/afcat.1*
 
 %files -n %{libname}
 %defattr(-,root,root)
