@@ -4,23 +4,23 @@
 
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
-Version:	3.3.6
+Version:	3.3.7
 Release:	%mkrel 1
 Group:		System/Libraries
 License:	BSD
 URL:		http://www.afflib.org/
 Source0:	http://www.afflib.org/downloads/%{name}-%{version}.tar.gz
 Patch0:		afflib-3.3.4-gcc44.patch
-BuildRequires:	autoconf
-BuildRequires:	libtool
 BuildRequires:	curl-devel
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	fuse-devel
 BuildRequires:	libewf-devel
+BuildRequires:	lzma-devel
 BuildRequires:	libexpat-devel
 BuildRequires:	libtermcap-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
+BuildRequires:	python-devel
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	readline-devel
 BuildRequires:	zlib-devel
@@ -66,11 +66,11 @@ This package contains the static afflib library and its header files.
 %setup -q
 %patch0 -p1 -b .gcc4.4
 
-%build
-#export WANT_AUTOCONF_2_5=1
-#rm -f configure
-#libtoolize --copy --force; aclocal; autoconf --force; autoheader; automake
+#fix spurious permissions with lzma443
+find lzma443 -type f -exec chmod 0644 {} ';'
+chmod 0644 lib/base64.{h,cpp}
 
+%build
 #TODO fix format not a string literal
 %define Werror_cflags %nil
 
@@ -87,6 +87,9 @@ export CFLAGS="%{optflags} -fPIC"
 # Remove rpath from libtool
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+
+# clean unused-direct-shlib-dependencies
+sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
 %make
 
