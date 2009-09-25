@@ -4,13 +4,14 @@
 
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
-Version:	3.3.7
+Version:	3.4.1
 Release:	%mkrel 1
 Group:		System/Libraries
 License:	BSD
 URL:		http://www.afflib.org/
 Source0:	http://www.afflib.org/downloads/%{name}-%{version}.tar.gz
-Patch0:		afflib-3.3.4-gcc44.patch
+Patch0:		afflib-3.4.1-gcc43.patch
+Patch1:         afflib-3.4.1-pyver.patch
 BuildRequires:	curl-devel
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	fuse-devel
@@ -62,9 +63,9 @@ Source and Proprietary software.
 This package contains the static afflib library and its header files.
 
 %prep
-
 %setup -q
 %patch0 -p1 -b .gcc4.4
+%patch1 -p1 -b .pyver
 
 #fix spurious permissions with lzma443
 find lzma443 -type f -exec chmod 0644 {} ';'
@@ -77,11 +78,14 @@ chmod 0644 lib/base64.{h,cpp}
 export CFLAGS="%{optflags} -fPIC"
 
 %configure2_5x \
+	--disable-static \
 	--enable-shared \
 	--enable-wide-character-type \
 	--enable-libewf=yes \
     	--enable-s3=yes \
     	--enable-fuse=no \
+	--enable-python=yes \
+	--enable-qemu=no \
     	--with-curl=%{_prefix}
 
 # Remove rpath from libtool
@@ -120,6 +124,7 @@ install -m0644 lib/*.h %{buildroot}%{_includedir}/afflib/
 %{_bindir}/afconvert
 %{_bindir}/afcopy
 %{_bindir}/afcrypto
+%{_bindir}/afdiskprint
 %{_bindir}/affix
 %{_bindir}/affuse
 %{_bindir}/afinfo
@@ -132,6 +137,7 @@ install -m0644 lib/*.h %{buildroot}%{_includedir}/afflib/
 %{_bindir}/afxml
 %{_bindir}/s3
 %{_mandir}/man1/afcat.1*
+%{py_platsitedir}/pyaff.so
 
 %files -n %{libname}
 %defattr(-,root,root)
@@ -143,6 +149,6 @@ install -m0644 lib/*.h %{buildroot}%{_includedir}/afflib/
 %dir %{_includedir}/afflib
 %{_includedir}/afflib/*.h
 %{_libdir}/*.so
-%{_libdir}/*.a
 %{_libdir}/*.la
+%{py_platsitedir}/*.la
 %{_libdir}/pkgconfig/*.pc
