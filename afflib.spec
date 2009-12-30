@@ -4,13 +4,12 @@
 
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
-Version:	3.4.1
-Release:	%mkrel 2
+Version:	3.5.5
+Release:	%mkrel 1
 Group:		System/Libraries
 License:	BSD
 URL:		http://www.afflib.org/
 Source0:	http://www.afflib.org/downloads/%{name}-%{version}.tar.gz
-Patch0:		afflib-3.4.1-gcc43.patch
 Patch1:         afflib-3.4.1-pyver.patch
 BuildRequires:	curl-devel
 # GPLv2 FOSS incompatible with BSD with advertising
@@ -64,7 +63,6 @@ This package contains the static afflib library and its header files.
 
 %prep
 %setup -q
-%patch0 -p1 -b .gcc4.4
 %patch1 -p1 -b .pyver
 
 #fix spurious permissions with lzma443
