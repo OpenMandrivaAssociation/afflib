@@ -10,7 +10,6 @@ Group:		System/Libraries
 License:	BSD
 URL:		http://www.afflib.org/
 Source0:	http://www.afflib.org/downloads/%{name}-%{version}.tar.gz
-Patch1:         afflib-3.4.1-pyver.patch
 BuildRequires:	curl-devel
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	fuse-devel
@@ -37,7 +36,7 @@ programs for creating and manipulating AFF files.
 
 %package -n	%{libname}
 Summary:	A shared library that implements the AFF standard
-Group:          System/Libraries
+Group:		System/Libraries
 
 %description -n	%{libname}
 AFFLIB is an open source library developed by Simson Garfinkel and Basis
@@ -69,34 +68,20 @@ find lzma443 -type f -exec chmod 0644 {} ';'
 chmod 0644 lib/base64.{h,cpp}
 
 %build
-#TODO fix format not a string literal
-#%define Werror_cflags %nil
-
-export CFLAGS="%{optflags} -fPIC"
-
 %configure2_5x \
 	--disable-static \
 	--enable-shared \
 	--enable-wide-character-type \
 	--enable-libewf=yes \
-    	--enable-s3=yes \
-    	--enable-fuse=no \
+	--enable-s3=yes \
+	--enable-fuse=no \
 	--enable-python=yes \
 	--enable-qemu=no \
-    	--with-curl=%{_prefix}
-
-# Remove rpath from libtool
-#sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-#sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
-
-# clean unused-direct-shlib-dependencies
-#sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
-
+	--with-curl=%{_prefix}
 %make
 
 %install
 %makeinstall_std
-
 # install headers as well
 install -d %{buildroot}%{_includedir}/afflib
 install -m0644 lib/*.h %{buildroot}%{_includedir}/afflib/
