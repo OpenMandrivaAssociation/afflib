@@ -4,8 +4,8 @@
 
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
-Version:	3.5.5
-Release:	%mkrel 2
+Version:	3.6.15
+Release:	1
 Group:		System/Libraries
 License:	BSD
 URL:		http://www.afflib.org/
@@ -63,7 +63,6 @@ This package contains the static afflib library and its header files.
 
 %prep
 %setup -q
-%patch1 -p1 -b .pyver
 
 #fix spurious permissions with lzma443
 find lzma443 -type f -exec chmod 0644 {} ';'
@@ -71,7 +70,7 @@ chmod 0644 lib/base64.{h,cpp}
 
 %build
 #TODO fix format not a string literal
-%define Werror_cflags %nil
+#%define Werror_cflags %nil
 
 export CFLAGS="%{optflags} -fPIC"
 
@@ -87,54 +86,39 @@ export CFLAGS="%{optflags} -fPIC"
     	--with-curl=%{_prefix}
 
 # Remove rpath from libtool
-sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+#sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+#sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
 # clean unused-direct-shlib-dependencies
-sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
+#sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
 %make
 
 %install
-rm -rf %{buildroot}
-
 %makeinstall_std
 
 # install headers as well
 install -d %{buildroot}%{_includedir}/afflib
 install -m0644 lib/*.h %{buildroot}%{_includedir}/afflib/
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
 %files
 %defattr(-,root,root)
-%{_bindir}/afcat
-%{_bindir}/afcompare
-%{_bindir}/afconvert
-%{_bindir}/afcopy
-%{_bindir}/afcrypto
-%{_bindir}/afdiskprint
+%{_bindir}/affcat
+%{_bindir}/affcompare
+%{_bindir}/affconvert
+%{_bindir}/affcopy
+%{_bindir}/affcrypto
+%{_bindir}/affdiskprint
 %{_bindir}/affix
 %{_bindir}/affuse
-%{_bindir}/afinfo
-%{_bindir}/afrecover
-%{_bindir}/afsegment
-%{_bindir}/afsign
-%{_bindir}/afstats
-%{_bindir}/aftest
-%{_bindir}/afverify
-%{_bindir}/afxml
-%{_bindir}/s3
-%{_mandir}/man1/afcat.1*
+%{_bindir}/affinfo
+%{_bindir}/affrecover
+%{_bindir}/affsegment
+%{_bindir}/affsign
+%{_bindir}/affstats
+%{_bindir}/affverify
+%{_bindir}/affxml
+%{_mandir}/man1/affcat.1*
 %{py_platsitedir}/pyaff.so
 
 %files -n %{libname}
