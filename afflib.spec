@@ -4,7 +4,7 @@
 
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
-Version:	3.6.15
+Version:	3.7.0
 Release:	1
 Group:		System/Libraries
 License:	BSD
@@ -15,15 +15,14 @@ BuildRequires:	curl-devel
 #BuildRequires:	fuse-devel
 BuildRequires:	libewf-devel
 BuildRequires:	lzma-devel
-BuildRequires:	libexpat-devel
-BuildRequires:	libtermcap-devel
+BuildRequires:	expat-devel
+BuildRequires:	termcap-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	openssl-devel
 BuildRequires:	python-devel
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	readline-devel
 BuildRequires:	zlib-devel
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 AFFLIB is an open source library developed by Simson Garfinkel and Basis
@@ -87,7 +86,6 @@ install -d %{buildroot}%{_includedir}/afflib
 install -m0644 lib/*.h %{buildroot}%{_includedir}/afflib/
 
 %files
-%defattr(-,root,root)
 %{_bindir}/affcat
 %{_bindir}/affcompare
 %{_bindir}/affconvert
@@ -107,15 +105,11 @@ install -m0644 lib/*.h %{buildroot}%{_includedir}/afflib/
 %{py_platsitedir}/pyaff.so
 
 %files -n %{libname}
-%defattr(-,root,root)
 %doc AUTHORS BUGLIST.txt COPYING ChangeLog NEWS README* doc/*
 %{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %dir %{_includedir}/afflib
 %{_includedir}/afflib/*.h
 %{_libdir}/*.so
-%{_libdir}/*.la
-%{py_platsitedir}/*.la
 %{_libdir}/pkgconfig/*.pc
