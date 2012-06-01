@@ -4,7 +4,7 @@
 
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
-Version:	3.7.0
+Version:	3.7.1
 Release:	1
 Group:		System/Libraries
 License:	BSD
