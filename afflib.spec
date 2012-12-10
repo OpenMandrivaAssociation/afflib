@@ -10,19 +10,19 @@ Group:		System/Libraries
 License:	BSD
 URL:		http://www.afflib.org/
 Source0:	http://www.afflib.org/downloads/%{name}-%{version}.tar.gz
-BuildRequires:	curl-devel
+BuildRequires:	pkgconfig(libcurl)
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	fuse-devel
 BuildRequires:	libewf-devel
 BuildRequires:	lzma-devel
 BuildRequires:	expat-devel
 BuildRequires:	termcap-devel
-BuildRequires:	ncurses-devel
-BuildRequires:	openssl-devel
-BuildRequires:	python-devel
+BuildRequires:	pkgconfig(ncurses)
+BuildRequires:	pkgconfig(openssl)
+BuildRequires:	pkgconfig(python)
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	readline-devel
-BuildRequires:	zlib-devel
+BuildRequires:	pkgconfig(zlib)
 
 %description
 AFFLIB is an open source library developed by Simson Garfinkel and Basis
