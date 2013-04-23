@@ -5,7 +5,7 @@
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
 Version:	3.7.1
-Release:	1
+Release:	2
 Group:		System/Libraries
 License:	BSD
 URL:		http://www.afflib.org/
@@ -16,7 +16,6 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	libewf-devel
 BuildRequires:	lzma-devel
 BuildRequires:	expat-devel
-BuildRequires:	termcap-devel
 BuildRequires:	pkgconfig(ncurses)
 BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(python)
