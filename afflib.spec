@@ -18,7 +18,7 @@ BuildRequires:	lzma-devel
 BuildRequires:	expat-devel
 BuildRequires:	pkgconfig(ncurses)
 BuildRequires:	pkgconfig(openssl)
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python2)
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	readline-devel
 BuildRequires:	pkgconfig(zlib)
@@ -101,7 +101,7 @@ install -m0644 lib/*.h %{buildroot}%{_includedir}/afflib/
 %{_bindir}/affverify
 %{_bindir}/affxml
 %{_mandir}/man1/affcat.1*
-%{py_platsitedir}/pyaff.so
+%{py2_platsitedir}/pyaff.so
 
 %files -n %{libname}
 %doc AUTHORS BUGLIST.txt COPYING ChangeLog NEWS README* doc/*
