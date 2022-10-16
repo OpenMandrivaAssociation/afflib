@@ -1,0 +1,12 @@
+diff -up AFFLIBv3-3.7.19/configure.ac.omv~ AFFLIBv3-3.7.19/configure.ac
+--- AFFLIBv3-3.7.19/configure.ac.omv~	2022-10-16 17:58:52.516271991 +0200
++++ AFFLIBv3-3.7.19/configure.ac	2022-10-16 17:59:09.469377598 +0200
+@@ -35,7 +35,7 @@ if test x"${cross_compiling}" = "xno" ;
+   # search path. I don't know why autoconf doesn't do this by default
+   for spfx in ${prefix} /sw /opt/local /usr/local ; do
+     AC_MSG_NOTICE([checking ${spfx}/include])
+-    if test -d ${spfx}/include; then
++    if test -d ${spfx}/include -a "${spfx}" != "/usr" -a "${spfx}" != "/usr/local"; then
+         CPPFLAGS="$CPPFLAGS -I${spfx}/include"
+         LDFLAGS="$LDFLAGS -L${spfx}/lib"
+         AC_MSG_NOTICE([ *** ADDING ${spfx}/include to CPPFLAGS *** ])

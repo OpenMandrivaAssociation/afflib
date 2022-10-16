@@ -1,5 +1,9 @@
+# python modules don't need to link -lpython
+%define _disable_ld_no_undefined 1
+
 %define	major 0
-%define libname		%mklibname %{name} %{major}
+%define libname		%mklibname %{name}
+%define oldlibname	%mklibname %{name} 0
 %define develname	%mklibname %{name} -d
 
 %bcond_without	python
@@ -11,7 +15,8 @@ Release:	1
 Group:		System/Libraries
 License:	BSD
 URL:		https://github.com/sshock/AFFLIBv3
-Source0:	%{url}/archive/v%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/sshock/AFFLIBv3/archive/v%{version}/%{name}-%{version}.tar.gz
+Patch0:		afflib-3.7.19-no-Lusrlib.patch
 BuildRequires:	pkgconfig(expat)
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	pkgconfig(fuse)
@@ -57,14 +62,14 @@ programs for creating and manipulating AFF files.
 %{_bindir}/affstats
 %{_bindir}/affverify
 %{_bindir}/affxml
-%{_mandir}/man1/affcat.1*
-%{py_platsitedir}/pyaff.so
+%{_mandir}/man1/aff*.1*
 
 #---------------------------------------------------------------------------
 
 %package -n	%{libname}
 Summary:	A shared library that implements the AFF standard
 Group:		System/Libraries
+%rename %{oldlibname}
 
 %description -n	%{libname}
 AFFLIB is an open source library developed by Simson Garfinkel and Basis
@@ -115,8 +120,8 @@ basic metadata accessor functions. The binding is not currently complete.
 %files -n python-pyaff
 %license COPYING
 %doc pyaff/README
-%{py_platsitedir}/%{module}*.so
-%{py_platsitedir}/PyAFF-%{version}-py%{py_ver}.egg-info
+%{py_platsitedir}/pyaff.*.so
+%{py_platsitedir}/PyAFF-*-py%{py_ver}.egg-info
 }
 
 #---------------------------------------------------------------------------
@@ -161,6 +166,6 @@ cd pyaff
 %make_install
 
 %{?with_python:
+cd pyaff
 %py_install
 }
-
