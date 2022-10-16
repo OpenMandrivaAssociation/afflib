@@ -29,13 +29,13 @@ BuildRequires:	pkgconfig(openssl)
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	pkgconfig(readline)
 BuildRequires:	pkgconfig(zlib)
-%{?_with_python:
+%if %{with python}
 BuildRequires:	pkgconfig(python3)
-BuildRequires:	python3dist(cython)
-#BuildRequires:	python3dist(pip)
-BuildRequires:	python3dist(setuptools)
-#BuildRequires:	python3dist(wheel)
-}
+BuildRequires:	python%{pyver}dist(cython)
+BuildRequires:	python%{pyver}dist(pip)
+BuildRequires:	python%{pyver}dist(setuptools)
+BuildRequires:	python%{pyver}dist(wheel)
+%endif
 
 %description
 AFFLIB is an open source library developed by Simson Garfinkel and Basis
