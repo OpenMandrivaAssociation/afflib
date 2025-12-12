@@ -11,7 +11,7 @@
 Summary:	A set of programs for creating and manipulating AFF files
 Name:		afflib
 Version:	3.7.22
-Release:	1
+Release:	2
 Group:		System/Libraries
 License:	BSD
 URL:		https://github.com/sshock/AFFLIBv3
