@@ -17,6 +17,11 @@ License:	BSD
 URL:		https://github.com/sshock/AFFLIBv3
 Source0:	https://github.com/sshock/AFFLIBv3/archive/v%{version}/%{name}-%{version}.tar.gz
 Patch0:		afflib-3.7.19-no-Lusrlib.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(expat)
 # GPLv2 FOSS incompatible with BSD with advertising
 #BuildRequires:	pkgconfig(fuse)
